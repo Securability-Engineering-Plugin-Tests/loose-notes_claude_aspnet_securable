@@ -1,0 +1,14 @@
+@{
+    ViewData["Title"] = "Error";
+}
+
+<h1 class="text-danger">Error</h1>
+<h2 class="text-danger">An error occurred while processing your request.</h2>
+
+@if (ViewData["RequestId"] != null)
+{
+    <p><strong>Request ID:</strong> <code>@ViewData["RequestId"]</code></p>
+}
+
+<p>Please try again, or contact support if the problem persists.</p>
+<a asp-controller="Home" asp-action="Index" class="btn btn-primary">Return to Home</a>

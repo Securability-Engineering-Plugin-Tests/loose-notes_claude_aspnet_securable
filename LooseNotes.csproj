@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>LooseNotes</RootNamespace>
+    <AssemblyName>LooseNotes</AssemblyName>
+    <Deterministic>true</Deterministic>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- EF Core with SQLite for portability; swap to SqlServer/Postgres in production -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <!-- ASP.NET Core Identity for password hashing, user management, and role-based access -->
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
+    <!-- Data protection for anti-forgery tokens and secure cookies -->
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection" Version="8.0.10" />
+    <!-- Rate limiting middleware (built-in to ASP.NET Core 7+, no extra package needed) -->
+  </ItemGroup>
+
+</Project>

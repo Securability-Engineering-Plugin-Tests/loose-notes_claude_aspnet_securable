@@ -1,0 +1,42 @@
+@model NoteListViewModel
+@{
+    ViewData["Title"] = "My Notes";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>@ViewData["Title"]</h2>
+    <a asp-action="Create" class="btn btn-primary">New Note</a>
+</div>
+
+@if (!Model.Notes.Any())
+{
+    <p class="text-muted">You have no notes yet.</p>
+}
+else
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Visibility</th>
+                <th>Updated</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var note in Model.Notes)
+            {
+                <tr>
+                    <td>@note.Title</td>
+                    <td>@(note.IsPublic ? "Public" : "Private")</td>
+                    <td>@note.UpdatedAt.ToString("yyyy-MM-dd")</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@note.Id" class="btn btn-sm btn-outline-primary">View</a>
+                        <a asp-action="Edit" asp-route-id="@note.Id" class="btn btn-sm btn-outline-secondary">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@note.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
