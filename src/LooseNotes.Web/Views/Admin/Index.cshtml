@@ -1,0 +1,18 @@
+@model dynamic
+@{ ViewData["Title"] = "Admin"; }
+<h1>Admin dashboard</h1>
+<dl>
+    <dt>Users</dt><dd>@Model.UserCount</dd>
+    <dt>Notes</dt><dd>@Model.NoteCount</dd>
+    <dt>Attachments</dt><dd>@Model.AttachmentCount</dd>
+    <dt>Share tokens</dt><dd>@Model.ShareTokenCount</dd>
+</dl>
+<p>Operational tasks (database migration, key rotation) are performed via the <code>dotnet</code> CLI by an operator with shell access. The web UI does not execute system commands.</p>
+
+<h2>Reassign note ownership</h2>
+<form method="post" asp-action="Reassign">
+    @Html.AntiForgeryToken()
+    <label>Note ID <input type="number" name="NoteId" required min="1" /></label>
+    <label>Target user ID <input type="text" name="TargetUserId" required maxlength="64" /></label>
+    <button type="submit">Reassign</button>
+</form>

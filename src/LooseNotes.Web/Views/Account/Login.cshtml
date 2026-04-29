@@ -1,0 +1,12 @@
+@model LoginInput
+@{ ViewData["Title"] = "Sign in"; }
+<h1>Sign in</h1>
+@if (TempData["RecoverySuccess"] is string msg) { <p class="notice">@msg</p> }
+<form method="post" asp-controller="Account" asp-action="Login">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="All" class="error"></div>
+    <label>Username <input asp-for="Username" autocomplete="username" /></label>
+    <label>Password <input asp-for="Password" type="password" autocomplete="current-password" /></label>
+    <button type="submit">Sign in</button>
+</form>
+<p><a asp-controller="Recovery" asp-action="Begin">Forgot your password?</a></p>

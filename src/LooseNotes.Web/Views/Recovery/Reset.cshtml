@@ -1,0 +1,10 @@
+@model RecoveryResetInput
+@{ ViewData["Title"] = "Reset Password"; }
+<h1>Choose a new password</h1>
+<form method="post" asp-controller="Recovery" asp-action="Reset">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="All" class="error"></div>
+    <label>New password <input asp-for="NewPassword" type="password" autocomplete="new-password" /></label>
+    <label>Confirm <input asp-for="ConfirmNewPassword" type="password" autocomplete="new-password" /></label>
+    <button type="submit">Reset password</button>
+</form>

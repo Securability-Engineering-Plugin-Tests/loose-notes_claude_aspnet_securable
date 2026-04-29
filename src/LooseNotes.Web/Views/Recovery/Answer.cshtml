@@ -1,0 +1,13 @@
+@model RecoveryAnswerInput
+@{
+    ViewData["Title"] = "Security Question";
+    var question = ViewData["Question"] as string;
+}
+<h1>Security question</h1>
+<p>@question</p>
+<form method="post" asp-controller="Recovery" asp-action="Answer">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="All" class="error"></div>
+    <label>Answer <input asp-for="Answer" autocomplete="off" /></label>
+    <button type="submit">Continue</button>
+</form>

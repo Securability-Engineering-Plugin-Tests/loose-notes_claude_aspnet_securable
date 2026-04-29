@@ -1,0 +1,14 @@
+@model IEnumerable<Note>
+@{ ViewData["Title"] = "My Notes"; }
+<h1>My notes</h1>
+<p><a asp-action="Create">Create a note</a></p>
+<ul>
+@foreach (var n in Model)
+{
+    <li>
+        <a asp-action="Details" asp-route-id="@n.Id">@n.Title</a>
+        @if (n.IsPublic) { <span class="badge">public</span> } else { <span class="badge">private</span> }
+        <small>updated @n.UpdatedAt.ToString("u")</small>
+    </li>
+}
+</ul>

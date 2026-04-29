@@ -1,0 +1,14 @@
+@model NoteEditInput
+@{ ViewData["Title"] = "Edit Note"; }
+<h1>Edit note</h1>
+<form method="post" asp-action="Edit">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <div asp-validation-summary="All" class="error"></div>
+    <label>Title <input asp-for="Title" maxlength="200" /></label>
+    <label>Content
+        <textarea asp-for="Content" rows="12" maxlength="50000"></textarea>
+    </label>
+    <label><input type="checkbox" asp-for="IsPublic" /> Public</label>
+    <button type="submit">Save changes</button>
+</form>

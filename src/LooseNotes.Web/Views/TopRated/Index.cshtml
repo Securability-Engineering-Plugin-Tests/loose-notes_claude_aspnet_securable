@@ -1,0 +1,12 @@
+@model IReadOnlyList<Note>
+@{ ViewData["Title"] = "Top-Rated Notes"; }
+<h1>Top-rated notes</h1>
+<ul>
+@foreach (var n in Model)
+{
+    <li>
+        <a asp-controller="Notes" asp-action="Details" asp-route-id="@n.Id">@n.Title</a>
+        <small>updated @n.UpdatedAt.ToString("u")</small>
+    </li>
+}
+</ul>

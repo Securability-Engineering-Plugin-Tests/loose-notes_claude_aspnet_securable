@@ -1,0 +1,20 @@
+@{ ViewData["Title"] = "Import / Export"; }
+<h1>Import / export your notes</h1>
+
+@if (TempData["ImportError"] is string err) { <p class="error">@err</p> }
+@if (TempData["ImportSuccess"] is string ok) { <p class="notice">@ok</p> }
+
+<h2>Export</h2>
+<form method="post" asp-action="Export">
+    @Html.AntiForgeryToken()
+    <p>Enter note IDs separated by commas (or leave blank to export none).</p>
+    <input type="text" name="noteIds" placeholder="1,2,3" pattern="[0-9, ]*" />
+    <button type="submit">Download ZIP</button>
+</form>
+
+<h2>Import</h2>
+<form method="post" asp-action="Import" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <input type="file" name="archive" accept=".zip" required />
+    <button type="submit">Upload</button>
+</form>

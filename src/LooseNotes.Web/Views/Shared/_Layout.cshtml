@@ -1,0 +1,56 @@
+@inject SignInManager<ApplicationUser> SignIn
+@inject UserManager<ApplicationUser> Users
+@{
+    var user = await SignIn.UserManager.GetUserAsync(User);
+    var isAdmin = User?.IsInRole("Admin") == true;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <title>@(ViewData["Title"] ?? "LooseNotes")</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <nav>
+            <a asp-controller="Home" asp-action="Index">LooseNotes</a>
+            @if (User?.Identity?.IsAuthenticated == true)
+            {
+                <a asp-controller="Notes" asp-action="Index">My Notes</a>
+                <a asp-controller="Notes" asp-action="Create">New</a>
+                <a asp-controller="Ratings" asp-action="Mine">Ratings</a>
+                <a asp-controller="ImportExport" asp-action="Index">Import / Export</a>
+                <a asp-controller="TopRated" asp-action="Index">Top-Rated</a>
+                <a asp-controller="Account" asp-action="Profile">Profile</a>
+                @if (isAdmin)
+                {
+                    <a asp-controller="Admin" asp-action="Index">Admin</a>
+                }
+                <form asp-controller="Account" asp-action="Logout" method="post" style="display:inline">
+                    @Html.AntiForgeryToken()
+                    <button type="submit">Sign out</button>
+                </form>
+                <span class="user">@user?.UserName</span>
+            }
+            else
+            {
+                <a asp-controller="Account" asp-action="Login">Sign in</a>
+                <a asp-controller="Account" asp-action="Register">Register</a>
+            }
+        </nav>
+    </header>
+    <main>
+        @if (TempData["ShareLink"] is string link)
+        {
+            <div class="notice">Share link: <code>@link</code></div>
+        }
+        @RenderBody()
+    </main>
+    <footer>
+        <small>FIASSE/SSEM-aligned reference build &middot; @DateTime.UtcNow.ToString("yyyy")</small>
+    </footer>
+</body>
+</html>

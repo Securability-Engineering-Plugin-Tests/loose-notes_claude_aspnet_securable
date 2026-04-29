@@ -1,0 +1,25 @@
+@model RegisterInput
+@{
+    ViewData["Title"] = "Register";
+    var questions = ViewData["SecurityQuestions"] as IEnumerable<SecurityQuestion> ?? Enumerable.Empty<SecurityQuestion>();
+}
+<h1>Create your account</h1>
+<form method="post" asp-controller="Account" asp-action="Register">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="All" class="error"></div>
+    <label>Username <input asp-for="Username" autocomplete="username" /></label>
+    <label>Email <input asp-for="Email" type="email" autocomplete="email" /></label>
+    <label>Password <input asp-for="Password" type="password" autocomplete="new-password" /></label>
+    <label>Confirm <input asp-for="ConfirmPassword" type="password" autocomplete="new-password" /></label>
+    <label>Security question
+        <select asp-for="SecurityQuestionId">
+            <option value="">Choose…</option>
+            @foreach (var q in questions)
+            {
+                <option value="@q.Id">@q.Text</option>
+            }
+        </select>
+    </label>
+    <label>Answer <input asp-for="SecurityAnswer" autocomplete="off" /></label>
+    <button type="submit">Register</button>
+</form>

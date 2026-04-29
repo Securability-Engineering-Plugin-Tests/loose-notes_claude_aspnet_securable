@@ -1,0 +1,20 @@
+@model IReadOnlyList<Note>
+@{
+    ViewData["Title"] = "LooseNotes";
+    var query = ViewData["Query"] as string;
+}
+<h1>Browse Notes</h1>
+<form method="get" asp-controller="Home" asp-action="Index">
+    <input type="search" name="q" value="@query" maxlength="200" placeholder="Search public notes" />
+    <button type="submit">Search</button>
+</form>
+<ul class="note-list">
+    @foreach (var n in Model)
+    {
+        <li>
+            <a asp-controller="Notes" asp-action="Details" asp-route-id="@n.Id">@n.Title</a>
+            @if (!n.IsPublic) { <span class="badge">private</span> }
+            <small>updated @n.UpdatedAt.ToString("u")</small>
+        </li>
+    }
+</ul>

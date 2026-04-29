@@ -1,0 +1,20 @@
+:root { font-family: system-ui, sans-serif; }
+body { margin: 0; color: #1a1a1a; }
+header { background: #0e2230; color: white; padding: .75rem 1.5rem; }
+header nav a, header nav button { color: white; margin-right: 1rem; background: none; border: none; cursor: pointer; }
+main { max-width: 920px; margin: 1.5rem auto; padding: 0 1rem; }
+footer { padding: 1rem; text-align: center; color: #666; }
+.error { color: #b00020; background: #fdecea; padding: .5rem; border-radius: 4px; }
+.notice { color: #14532d; background: #e8f7ec; padding: .5rem; border-radius: 4px; }
+.badge { display: inline-block; padding: .1rem .4rem; border-radius: 999px; background: #eee; font-size: .75rem; }
+.user { float: right; }
+form label { display: block; margin: .5rem 0; }
+form input[type=text], form input[type=email], form input[type=password], form input[type=search],
+form input[type=number], form select, form textarea { width: 100%; padding: .5rem; box-sizing: border-box; }
+form button { padding: .5rem 1rem; }
+table { width: 100%; border-collapse: collapse; }
+table th, table td { padding: .4rem; border-bottom: 1px solid #ddd; text-align: left; }
+.note-list { list-style: none; padding: 0; }
+.note-list li { padding: .5rem 0; border-bottom: 1px solid #eee; }
+article .content { padding: 1rem 0; line-height: 1.5; }
+blockquote { margin: .5rem 0; border-left: 3px solid #ccc; padding-left: .75rem; }

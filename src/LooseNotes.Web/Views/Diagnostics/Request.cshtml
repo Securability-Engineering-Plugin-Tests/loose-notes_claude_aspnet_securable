@@ -1,0 +1,13 @@
+@model IReadOnlyList<KeyValuePair<string, string>>
+@{ ViewData["Title"] = "Request diagnostics"; }
+<h1>Request diagnostics</h1>
+<p>Header values are HTML-encoded by Razor before rendering. Sensitive headers are redacted server-side.</p>
+<table>
+    <thead><tr><th>Name</th><th>Value</th></tr></thead>
+    <tbody>
+    @foreach (var p in Model)
+    {
+        <tr><td>@p.Key</td><td>@p.Value</td></tr>
+    }
+    </tbody>
+</table>

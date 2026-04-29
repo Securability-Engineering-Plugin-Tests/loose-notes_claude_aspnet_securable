@@ -1,0 +1,8 @@
+LooseNotes ASP.NET Core 8 securable reference build — completed 2026-04-28.
+
+Build: dotnet build (Debug + Release) succeeds with 0 warnings, 0 errors.
+Tests: 17 / 17 xUnit tests pass.
+Smoke: app starts, EF Core seeds, Home/Index returns 200, secure-cookie policy
+       engages as designed (HTTP form requests rejected per Secure=Always).
+
+FIASSE/SSEM coverage of all 10 attributes documented in README.md.

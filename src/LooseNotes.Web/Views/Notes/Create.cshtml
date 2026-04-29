@@ -1,0 +1,13 @@
+@model NoteCreateInput
+@{ ViewData["Title"] = "New Note"; }
+<h1>New note</h1>
+<form method="post" asp-action="Create">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="All" class="error"></div>
+    <label>Title <input asp-for="Title" maxlength="200" /></label>
+    <label>Content (HTML allowed; sanitized server-side)
+        <textarea asp-for="Content" rows="12" maxlength="50000"></textarea>
+    </label>
+    <label><input type="checkbox" asp-for="IsPublic" /> Make this note public</label>
+    <button type="submit">Create</button>
+</form>

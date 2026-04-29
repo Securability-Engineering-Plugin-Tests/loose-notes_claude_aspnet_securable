@@ -1,0 +1,85 @@
+@model Note
+@{
+    ViewData["Title"] = Model.Title;
+    var canEdit = User?.Identity?.IsAuthenticated == true
+        && (Model.OwnerId == User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
+            || User.IsInRole("Admin"));
+}
+<article>
+    <h1>@Model.Title</h1>
+    @* SanitizedContent is the output of HtmlSanitizationService — only here do
+       we render via Html.Raw, and only because sanitization happened on write. *@
+    <div class="content">@Html.Raw(Model.SanitizedContent)</div>
+    <small>Owner: @Model.OwnerId · Updated: @Model.UpdatedAt.ToString("u") · @(Model.IsPublic ? "Public" : "Private")</small>
+</article>
+
+@if (canEdit)
+{
+    <form method="post" asp-action="Edit" asp-route-id="@Model.Id" style="display:inline">
+        @Html.AntiForgeryToken()
+        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+    </form>
+    <form method="post" asp-action="Delete" asp-route-id="@Model.Id" style="display:inline">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="id" value="@Model.Id" />
+        <button type="submit" onclick="return confirm('Delete this note?')">Delete</button>
+    </form>
+    <form method="post" asp-controller="Share" asp-action="Create" style="display:inline">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="NoteId" value="@Model.Id" />
+        <input type="number" name="LifetimeDays" min="0" max="365" placeholder="days" />
+        <button type="submit">Create share link</button>
+    </form>
+}
+
+<section>
+    <h2>Attachments</h2>
+    <ul>
+        @foreach (var a in Model.Attachments)
+        {
+            <li>
+                <a asp-controller="Attachments" asp-action="Download" asp-route-id="@a.Id">@a.OriginalFileName</a>
+                <small>(@a.ContentType, @a.SizeBytes bytes)</small>
+            </li>
+        }
+    </ul>
+    @if (canEdit)
+    {
+        @if (TempData["AttachmentError"] is string aerr) { <p class="error">@aerr</p> }
+        <form method="post" asp-action="Upload" asp-route-id="@Model.Id" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <input type="file" name="file" required />
+            <button type="submit">Attach file</button>
+        </form>
+    }
+</section>
+
+<section>
+    <h2>Ratings &amp; comments</h2>
+    @if (User?.Identity?.IsAuthenticated == true)
+    {
+        <form method="post" asp-controller="Ratings" asp-action="Submit">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="NoteId" value="@Model.Id" />
+            <label>Score
+                <select name="Score">
+                    @for (int i = 1; i <= 5; i++) { <option value="@i">@i</option> }
+                </select>
+            </label>
+            <label>Comment
+                <textarea name="Comment" maxlength="1000" rows="2"></textarea>
+            </label>
+            <button type="submit">Rate</button>
+        </form>
+    }
+    <ul>
+        @foreach (var r in Model.Ratings)
+        {
+            <li>
+                <strong>@r.Score / 5</strong> by @(r.Submitter?.UserName ?? "(unknown)") @r.CreatedAt.ToString("u")
+                @* Razor auto-encodes — comment is plaintext rendered as text. *@
+                @if (!string.IsNullOrEmpty(r.Comment)) { <blockquote>@r.Comment</blockquote> }
+            </li>
+        }
+    </ul>
+</section>

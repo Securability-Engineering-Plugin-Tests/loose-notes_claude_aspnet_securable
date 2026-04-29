@@ -1,0 +1,10 @@
+@model Note
+@{
+    ViewData["Title"] = Model.Title;
+    Layout = "_Layout";
+}
+<article class="shared">
+    <h1>@Model.Title</h1>
+    <p><small>Shared via link · read-only</small></p>
+    <div class="content">@Html.Raw(Model.SanitizedContent)</div>
+</article>

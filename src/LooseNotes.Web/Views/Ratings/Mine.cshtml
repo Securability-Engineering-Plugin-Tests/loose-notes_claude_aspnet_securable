@@ -1,0 +1,18 @@
+@model IEnumerable<Rating>
+@{ ViewData["Title"] = "Ratings on my notes"; }
+<h1>Ratings on my notes</h1>
+<table>
+    <thead><tr><th>Note</th><th>Score</th><th>By</th><th>When</th><th>Comment</th></tr></thead>
+    <tbody>
+    @foreach (var r in Model)
+    {
+        <tr>
+            <td><a asp-controller="Notes" asp-action="Details" asp-route-id="@r.NoteId">@r.Note?.Title</a></td>
+            <td>@r.Score</td>
+            <td>@(r.Submitter?.UserName ?? "(unknown)")</td>
+            <td>@r.CreatedAt.ToString("u")</td>
+            <td>@r.Comment</td>
+        </tr>
+    }
+    </tbody>
+</table>

@@ -1,0 +1,20 @@
+@model ApplicationUser
+@{ ViewData["Title"] = "Profile"; }
+<h1>Profile</h1>
+<dl>
+    <dt>Username</dt><dd>@Model.UserName</dd>
+    <dt>Email</dt><dd>@Model.Email</dd>
+    <dt>Member since</dt><dd>@Model.CreatedAt.ToString("u")</dd>
+</dl>
+
+@if (TempData["ChangePasswordError"] is string err) { <p class="error">@err</p> }
+@if (TempData["ChangePasswordSuccess"] is string ok) { <p class="notice">@ok</p> }
+
+<h2>Change password</h2>
+<form method="post" asp-controller="Account" asp-action="ChangePassword">
+    @Html.AntiForgeryToken()
+    <label>Current <input name="CurrentPassword" type="password" autocomplete="current-password" required /></label>
+    <label>New <input name="NewPassword" type="password" autocomplete="new-password" required /></label>
+    <label>Confirm <input name="ConfirmNewPassword" type="password" autocomplete="new-password" required /></label>
+    <button type="submit">Update</button>
+</form>

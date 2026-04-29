@@ -1,0 +1,10 @@
+@model RecoveryStartInput
+@{ ViewData["Title"] = "Account Recovery"; }
+<h1>Account recovery</h1>
+<p>Enter your registered email address. If we recognize it, we'll show you the security question on the next page.</p>
+<form method="post" asp-controller="Recovery" asp-action="Begin">
+    @Html.AntiForgeryToken()
+    <div asp-validation-summary="All" class="error"></div>
+    <label>Email <input asp-for="Email" type="email" autocomplete="email" /></label>
+    <button type="submit">Continue</button>
+</form>
